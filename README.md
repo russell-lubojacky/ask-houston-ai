@@ -29,7 +29,6 @@ This project brings public data to life by allowing people to:
 - Ask **natural language questions**
 - View answers in **dynamic maps**, **charts**, and **reports**
 - Gain insights from Houston's historical and real-time datasets
----
 
 ## 🧱 Tech Stack
 | Layer               | Tech                                 |
@@ -42,7 +41,7 @@ This project brings public data to life by allowing people to:
 | ⚙️ Backend API      | Node.js / Python (TBD)               |
 | 🐳 DevOps           | Docker, Docker Compose               |
 | ☁️ Hosting          | Linode (Cload Compute)               |
----
+
 ## 🚀 Quick Start (Local Dev)
 
 ### Prerequisites
@@ -64,7 +63,6 @@ docker-compose up
 
 App will be available at http://localhost:5173
 
----
 ## 📦 Data Sources
 | Source        | Description                        | Format         |
 |---------------|------------------------------------|----------------|
@@ -79,7 +77,6 @@ The application will use:
 - AI Prompt Engineering to interpret natural language
 - LLMs (OpenAI, open-source) to translate questions into SQL or map queries
 - Caching & Indexing for fast results and optimized query patterns
----
 
 ## 🗺️ Features
 - 🧭 Ask questions and get maps, charts, and insights
@@ -87,7 +84,6 @@ The application will use:
 - 📈 Visual analytics powered by your queries
 - 🧠 AI assistance for query generation and exploration
 - 🔒 All containerized with secure deployment to Linode
----
 
 ## 🛣️ Roadmap
 - Initial data load from Houston 311
@@ -97,15 +93,12 @@ The application will use:
 - Public deployment to [askhouston.ai](https://askhouston.ai)
 - Expand to 911 data and real estate analytics
 - Add saved reports and shareable dashboards
----
 
 ## 🤝 Contributing
 We welcome contributors! If you're passionate about civic tech, mapping, data viz, or AI - get in touch or fork the repo!
----
 
 ## 📄 License
 MIT License
----
 
 ## 📫 Contact
 Built with ❤️ by [Russell Lubojacky](https://github.com/russell-lubojacky)
