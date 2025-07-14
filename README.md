@@ -4,16 +4,16 @@ Welcome to **Ask Houston AI** - a data exploration and visualization tool that l
 🌐 Planned live deployment: [askhouston.ai](https://askhouston.ai) (coming soon)
 
 ## 📚 Table of Contents
-- [Project Vision](#-project-vision)
-- [Tech Stack](#-tech-stack)
-- [Quick Start (Local Dev)](#-quick-start-local-dev)
-- [Data Sources](#-data-sources)
-- [AI Integration](#-ai-integration)
-- [Features](#️-features)
-- [Roadmap](#️-roadmap)
-- [Contributing](#-contributing)
-- [License](#-license)
-- [Contact](#-contact)
+- [🔍 Project Vision](#-project-vision)
+- [🧱 Tech Stack](#-tech-stack)
+- [🚀 Quick Start (Local Dev)](#-quick-start-local-dev)
+- [📦 Data Sources](#-data-sources)
+- [🤖 AI Integration](#-ai-integration)
+- [🗺️ Features](#️-features)
+- [🛣️ Roadmap](#️-roadmap)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+- [📫 Contact](#-contact)
 
 ---
 
@@ -31,7 +31,7 @@ This project brings public data to life by allowing people to:
 - Gain insights from Houston's historical and real-time datasets
 ---
 
-## Tech Stack
+## 🧱 Tech Stack
 | Layer               | Tech                                 |
 |---------------------|--------------------------------------|
 | 🌐 Frontend         | [SvelteKit](https://kit.svelte.dev/) |
@@ -72,12 +72,14 @@ App will be available at http://localhost:5173
 | Houston 911   | Emergency call logs                | (Planned)      |
 | Real Estate   | Property listings + valuations     | (Planned)      |
 | Census        | Demographics by neighborhood       | (Planned)      |
+---
 
 ## 🤖 AI Integration
 The application will use:
 - AI Prompt Engineering to interpret natural language
 - LLMs (OpenAI, open-source) to translate questions into SQL or map queries
 - Caching & Indexing for fast results and optimized query patterns
+---
 
 ## 🗺️ Features
 - 🧭 Ask questions and get maps, charts, and insights
@@ -85,6 +87,7 @@ The application will use:
 - 📈 Visual analytics powered by your queries
 - 🧠 AI assistance for query generation and exploration
 - 🔒 All containerized with secure deployment to Linode
+---
 
 ## 🛣️ Roadmap
 - Initial data load from Houston 311
@@ -94,12 +97,15 @@ The application will use:
 - Public deployment to [askhouston.ai](https://askhouston.ai)
 - Expand to 911 data and real estate analytics
 - Add saved reports and shareable dashboards
+---
 
 ## 🤝 Contributing
 We welcome contributors! If you're passionate about civic tech, mapping, data viz, or AI - get in touch or fork the repo!
+---
 
 ## 📄 License
 MIT License
+---
 
 ## 📫 Contact
 Built with ❤️ by [Russell Lubojacky](https://github.com/russell-lubojacky)
