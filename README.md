@@ -70,7 +70,6 @@ App will be available at http://localhost:5173
 | Houston 911   | Emergency call logs                | (Planned)      |
 | Real Estate   | Property listings + valuations     | (Planned)      |
 | Census        | Demographics by neighborhood       | (Planned)      |
----
 
 ## 🤖 AI Integration
 The application will use:
