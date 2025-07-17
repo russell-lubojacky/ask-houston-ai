@@ -1,0 +1,30 @@
+services:
+    postgres:
+        image: postgis/postgis:15-3.3
+        container_name: houston_311_db
+        restart: unless-stopped
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: houston_311_db
+        ports:
+            - "5432:5432"
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+            - ./init:/docker-entrypoint-initdb.d
+
+    loader:
+        build:
+            context: .
+            dockerfile: Dockerfile.loader
+        depends_on:
+            - postgres
+        environment:
+            DB_HOST: localhost
+            DB_PORT: 5432
+            DB_USER: postgres
+            DB_PASSWORD: postgres
+            DB_NAME: houston_311_db
+            
+volumes:
+  pgdata:
