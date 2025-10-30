@@ -19,7 +19,7 @@ Welcome to **Ask Houston AI** - a data exploration and visualization tool that l
 
 ## 🔍 Project Vision
 >
-> "What are the most common 311 complaints in mu neighborhood over the past 10 years?"
+> "What are the most common 311 complaints in my neighborhood over the past 10 years?"
 >
 > "Show me which areas have the most 911 calls in the last month."
 >
@@ -40,7 +40,7 @@ This project brings public data to life by allowing people to:
 | 🐘 Database         | PostgreSQL + PostGIS                 |
 | ⚙️ Backend API      | Node.js / Python (TBD)               |
 | 🐳 DevOps           | Docker, Docker Compose               |
-| ☁️ Hosting          | Linode (Cload Compute)               |
+| ☁️ Hosting          | Linode (Cloud Compute)               |
 
 ## 🚀 Quick Start (Local Dev)
 
