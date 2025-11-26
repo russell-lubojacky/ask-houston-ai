@@ -1,30 +1,62 @@
 services:
     postgres:
         image: postgis/postgis:15-3.3
-        container_name: houston_311_db
-        restart: unless-stopped
         environment:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: postgres
             POSTGRES_DB: houston_311_db
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+            - ./postgres:/docker-entrypoint-initdb.d
         ports:
             - "5432:5432"
-        volumes:
-            - pgdata:/var/lib/postgresql/data
-            - ./init:/docker-entrypoint-initdb.d
 
     loader:
-        build:
-            context: .
-            dockerfile: Dockerfile.loader
+        build: ./loader
         depends_on:
             - postgres
         environment:
-            DB_HOST: localhost
+            DB_HOST: postgres
             DB_PORT: 5432
             DB_USER: postgres
             DB_PASSWORD: postgres
             DB_NAME: houston_311_db
+        volumes:
+            - ./loader:/app
+            - postgres_data:/var/lib/postgresql/data
+        working_dir: /app
+        command: ["sh", "run_loader_once.sh"]
+
+    app:
+        build: ./app
+        depends_on:
+            - postgres
+            - loader
+        volumes:
+            - ./app:/app
+        working_dir: /app
+        command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+        stdin_open: true
+        tty: true
+        ports:
+            - "8000:8000"
+        environment:
+            DB_HOST: postgres
+            DB_PORT: 5432
+            DB_USER: readonly_311
+            DB_PASSWORD: dev_readonly_password_CHANGE_IN_PRODUCTION
+            DB_NAME: houston_311_db
+            ALLOWED_ORIGINS: "*"  # Development only - restrict in production
+
+    frontend:
+        build: ./frontend
+        ports:
+            - "4173:4173"
+        depends_on:
+            - app
+        environment:
+            - PUBLIC_API_URL=http://app:8000
+
             
 volumes:
-  pgdata:
+    postgres_data:

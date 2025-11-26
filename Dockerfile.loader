@@ -1,7 +1,0 @@
-FROM python:3.11-slim
-
-WORKDIR /app
-COPY scripts/ ./scripts/
-RUN pip install psycopg2 requests
-
-CMD ["python", "scripts/load_311_data.py"]

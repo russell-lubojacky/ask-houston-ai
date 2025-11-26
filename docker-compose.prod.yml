@@ -1,0 +1,114 @@
+services:
+    postgres:
+        image: postgis/postgis:15-3.3
+        restart: unless-stopped
+        environment:
+            POSTGRES_USER: ${POSTGRES_USER}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+            POSTGRES_DB: ${POSTGRES_DB}
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+            - ./postgres:/docker-entrypoint-initdb.d
+        # Do NOT expose port 5432 in production - only internal access
+        networks:
+            - internal
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+
+    loader:
+        build: ./loader
+        restart: on-failure
+        depends_on:
+            postgres:
+                condition: service_healthy
+        environment:
+            DB_HOST: postgres
+            DB_PORT: 5432
+            DB_USER: ${POSTGRES_USER}
+            DB_PASSWORD: ${POSTGRES_PASSWORD}
+            DB_NAME: ${POSTGRES_DB}
+        volumes:
+            - ./loader:/app
+        working_dir: /app
+        command: ["sh", "run_loader_once.sh"]
+        networks:
+            - internal
+
+    app:
+        build:
+            context: ./app
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        depends_on:
+            postgres:
+                condition: service_healthy
+            loader:
+                condition: service_completed_successfully
+        environment:
+            DB_HOST: postgres
+            DB_PORT: 5432
+            DB_USER: ${DB_USER}
+            DB_PASSWORD: ${DB_PASSWORD}
+            DB_NAME: ${DB_NAME}
+            ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
+            LLM_MODEL: ${LLM_MODEL}
+            OLLAMA_HOST: ${OLLAMA_HOST}
+            ENVIRONMENT: production
+        # Do NOT expose port directly in production - use nginx as reverse proxy
+        networks:
+            - internal
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+            interval: 30s
+            timeout: 10s
+            retries: 3
+            start_period: 40s
+
+    frontend:
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        depends_on:
+            app:
+                condition: service_healthy
+        environment:
+            - PUBLIC_API_URL=${BACKEND_URL}
+        # Do NOT expose port directly in production - use nginx as reverse proxy
+        networks:
+            - internal
+        healthcheck:
+            test: ["CMD", "wget", "--spider", "-q", "http://localhost:4173"]
+            interval: 30s
+            timeout: 10s
+            retries: 3
+
+    nginx:
+        image: nginx:alpine
+        restart: unless-stopped
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+            - ./nginx/ssl:/etc/nginx/ssl:ro
+        depends_on:
+            - app
+            - frontend
+        networks:
+            - internal
+        healthcheck:
+            test: ["CMD", "wget", "--spider", "-q", "http://localhost/health"]
+            interval: 30s
+            timeout: 10s
+            retries: 3
+
+networks:
+    internal:
+        driver: bridge
+
+volumes:
+    postgres_data:

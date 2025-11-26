@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "google-docs": {
+      "command": "node",
+      "args": [
+        "/Users/russelllubojacky/repos/google-docs-mcp/dist/server.js"
+      ],
+      "env": {}
+    }
+  }
+}
